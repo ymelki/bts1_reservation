@@ -1,7 +1,7 @@
 
 <?php include "header.php" ?>
 
- <FORM method="POST" action="recherche_compagnie.php">
+ <FORM method="POST" action="compagnie.php">
     <input type="text" name="ville"  placeholder="VILLE">
     <input type="submit" class="text-primary" value="RECHERCHEZ">
  </FORM>
@@ -14,7 +14,18 @@ $password = '';
 $dbh = new PDO($dsn, $user, $password);
 
    //2. RECUPERER LES DONNEES 
-   $resultat = $dbh->query("select * from compagnies_aeriennes")->fetchAll();
+   // on fait un filtre a vide dans le cas ou on est dans la page
+   // compagnie sans avoir sur cliquer sur rechercher
+   $filtre="";
+   if ( isset($_POST['ville'])  ){
+    //  isset est une fonction permettant de renvoyer vrai si la variable
+    // existe
+    // on est dans le cas ou on a cliquer sur recherche et on a 
+    // une valeur $_POST['ville'] qui existe
+      $pays_post=$_POST['ville'];
+      $filtre=" where Pays_origine  = '$pays_post'";
+   }
+   $resultat = $dbh->query("select * from compagnies_aeriennes $filtre")->fetchAll();
 // 3. AFFICHAGE DES DONNES
 // var_dump($resultat);
 
