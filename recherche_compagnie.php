@@ -2,11 +2,15 @@
 <?php include "header.php" ?>
 
  <FORM method="POST" action="recherche_compagnie.php">
-    <input type="text" name="ville"  placeholder="VILLE">
+    <input type="text" name="ville" placeholder="VILLE">
     <input type="submit" class="text-primary" value="RECHERCHEZ">
  </FORM>
 
 <?php
+// $ville va etre affecté de la variable $_POST['ville']
+$ville=$_POST['ville'];
+echo $ville;
+var_dump($_POST);
 // 1 connexion à la B.D.
 $dsn = 'mysql:dbname=reservation;host=127.0.0.1';
 $user = 'root';
@@ -14,7 +18,8 @@ $password = '';
 $dbh = new PDO($dsn, $user, $password);
 
    //2. RECUPERER LES DONNEES 
-   $resultat = $dbh->query("select * from compagnies_aeriennes")->fetchAll();
+   $resultat = $dbh->query("select * from compagnies_aeriennes 
+   where Pays_origine =  '$ville' ")->fetchAll();
 // 3. AFFICHAGE DES DONNES
 // var_dump($resultat);
 

@@ -14,8 +14,8 @@ for ($i=3;$i<1000;$i++){
 
     $num_vol=rand(300,50000);
     $compagnie_alea=rand(1,511);
-    $ville_depart_alea=rand(1,464);
-    $ville_arrive_alea=rand(1,464);
+    $ville_depart_alea=rand(2,464);
+    $ville_arrive_alea=rand(2,464);
     $nb_day=rand(1,300);
     $nb_day_arrive=$nb_day+rand(0,1);
     $nb_hour=rand(1,10);
@@ -35,7 +35,7 @@ for ($i=3;$i<1000;$i++){
           Prix, 
           Places_disponibles)
          VALUES (
-            '$i',
+            NULL,
          '$compagnie_alea',
          '$num_vol',
          '$ville_depart_alea',

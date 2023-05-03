@@ -1,27 +1,19 @@
 
 <?php include "header.php" ?>
 
-
-<script>
-  $(function() {
-  $('#tags').autocomplete({
-    source: function(request, response) {
-      fetch('saisie_auto_aero.php')
-        .then(response => response.json())
-        .then(data => response(data))
-        .catch(error => console.error(error));
-    }
-  });
-});
-  </script>
-<body>
-
-<div class="ui-widget">
-  <label for="tags">Tags: </label>
-  <input id="tags">
+<form method="POST" action="aeroport.php">
+<div class="col-md-4">
+  <input type="text" class="form-control" name="aeroport" placeholder="ENTREZ UN NOM DE VILLE">
 </div>
+<div class="col-md-4">
+  <input type="submit"  class="form-control">
+</div>
+</form>
 
-
+<br />
+ 
+<body>
+ 
 <?php
 // 1 connexion à la B.D.
 $dsn = 'mysql:dbname=reservation;host=127.0.0.1';
@@ -29,8 +21,14 @@ $user = 'root';
 $password = '';
 $dbh = new PDO($dsn, $user, $password);
 
+$info="";
+if (isset($_POST['aeroport'])) {
+  $aeroport=$_POST['aeroport'];
+  $info="where ville='$aeroport' ";
+}
+
    //2. RECUPERER LES DONNEES 
-   $resultat = $dbh->query("select * from aeroports")->fetchAll();
+   $resultat = $dbh->query("select * from aeroports $info")->fetchAll();
 // 3. AFFICHAGE DES DONNES
 // var_dump($resultat);
 

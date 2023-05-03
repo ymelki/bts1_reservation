@@ -2,7 +2,7 @@
 
 ?>
 
-    <form class="row g-3 needs-validation" novalidate method="POST" action="recherche.php">
+    <form class="row g-3 needs-validation" novalidate method="POST" action="index.php">
 
 
         <div class="col-md-4">
@@ -40,7 +40,34 @@
             
         
         </form>
+
+
+
+
+    <?php     if (isset($_POST['depart'])) { ?>
+       Resultat de la recherche
+
+<?php 
+       // 1 connexion à la B.D.
+$dsn = 'mysql:dbname=reservation;host=127.0.0.1';
+$user = 'root';
+$password = '';
+$dbh = new PDO($dsn, $user, $password);
+
+   //2. RECUPERER LES DONNEES 
+   $resultat = $dbh->query("select * from vols")->fetchAll();
+// 3. AFFICHAGE DES DONNES
+// var_dump($resultat);
+
+
+
+      } ?>
+
+
+
     </div>
+
+
 
 </body>
 </html>
