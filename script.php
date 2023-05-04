@@ -8,14 +8,14 @@ $password = '';
 $dbh = new PDO($dsn, $user, $password);
 
 // 2. Boucle pour inserer 1000 lignes
-for ($i=3;$i<1000;$i++){
+for ($i=3;$i<100000;$i++){
     $prix=rand(100,1000);
     $nb_place=rand(50,1000);
-
+ 
     $num_vol=rand(300,50000);
     $compagnie_alea=rand(1,511);
-    $ville_depart_alea=rand(2,464);
-    $ville_arrive_alea=rand(2,464);
+    $ville_depart_alea=rand(1,2819);
+    $ville_arrive_alea=rand(1,2819);
     $nb_day=rand(1,300);
     $nb_day_arrive=$nb_day+rand(0,1);
     $nb_hour=rand(1,10);

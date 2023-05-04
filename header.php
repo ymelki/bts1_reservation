@@ -64,6 +64,10 @@
             <li class="nav-item">
             <a class="nav-link" href="compagnie.php">Liste des compagnies</a>
             </li>
+
+            <li class="nav-item">
+            <a class="nav-link" href="inscription.php">Inscription</a>
+            </li>
             
         </ul>
         <form class="d-flex" role="search">

@@ -44,7 +44,9 @@
 
 
 
-    <?php     if (isset($_POST['depart'])) { ?>
+    <?php   
+    // si on a cliqué sur recherché alors : 
+    if (isset($_POST['depart'])) { ?>
        Resultat de la recherche
 
 <?php 
@@ -53,21 +55,30 @@ $dsn = 'mysql:dbname=reservation;host=127.0.0.1';
 $user = 'root';
 $password = '';
 $dbh = new PDO($dsn, $user, $password);
-var_dump($_POST);
+ var_dump($_POST);
 $filtre="";
 if (isset($_POST['depart'])) {
   $depart=$_POST['depart'];
-  $filtre=" and  a.ville='$depart' ";
+  $filtre=" and  a.Ville='$depart' ";
 }
 
    //2. RECUPERER LES DONNEES 
    $resultat = $dbh->query("
    SELECT 
-v.Numero_vol, v.Date_depart, v.Date_arrivee, v.Heure_depart,v.Heure_arrivee,
-v.Prix, v.Places_disponibles,
-a.ville as ville_depart, a2.Ville as ville_arrivee from vols v LEFT join aeroports a  on a.ID_aeroport = v.Ville_depart
-                      LEFT join aeroports a2  on a2.ID_aeroport = v.Ville_arrivee
-where 1=1 $filtre
+   c.Nom_compagnie ,
+   v.Numero_vol,
+   v.Date_depart,
+   v.Date_arrivee,
+   v.Heure_depart,
+   v.Heure_arrivee,
+   v.Prix,
+   v.Places_disponibles,
+   a.Ville as ville_depart,
+   a2.Ville as ville_arrivee 
+   from vols v LEFT join aeroports as a on a.ID = v.Ville_depart
+            LEFT join aeroports as a2 on a2.ID = v.Ville_arrivee
+            left join compagnies_aeriennes as c on v.Compagnie_aerienne=c.ID_compagnie
+    where 1=1 $filtre
    ")->fetchAll();
 // 3. AFFICHAGE DES DONNES
 // var_dump($resultat);
@@ -75,21 +86,25 @@ where 1=1 $filtre
 
 ?>
 
-<div class="row row-cols-1 row-cols-md-3 g-4">
+<div >
 <?php foreach ($resultat as $unaeroport) {  ?>
-
+<hr>
     <div class="col">
-        <div class="card h-100">
+        <div class="card w-100 h-100">
         <div class="card-body">
-            <h5 class="card-title">NUMERO DE VOL : <?=$unaeroport['Numero_vol'] ?> </h5>
-            <p> Date de départ <?=$unaeroport['Date_depart'] ?> - <?=$unaeroport['Heure_depart'] ?> 
-            <p> Date d'arrivée <?=$unaeroport['Date_arrivee'] ?> - <?=$unaeroport['Heure_arrivee'] ?>
+            <h5 class="card-title"></h5> 
+             <p> Date de départ <?=$unaeroport['Date_depart'] ?> - <?=$unaeroport['Heure_depart'] ?> 
+            =>  Date d'arrivée <?=$unaeroport['Date_arrivee'] ?> - <?=$unaeroport['Heure_arrivee'] ?>
+
             <p class="card-text">  
-                Départ : <?=$unaeroport['ville_depart'] ?>  <p> 
-                Arrivé : <?=$unaeroport['ville_arrivee'] ?> <p>  
-                Prix : <?=$unaeroport['Prix'] ?> € <p>
+                <?=$unaeroport['ville_depart'] ?>  => 
+                <?=$unaeroport['ville_arrivee'] ?> <p>  
+                <b> <?=$unaeroport['Prix'] ?> € </b><p>
                 Nombre places restantes :    
-                 <?=$unaeroport['Places_disponibles'] ?> 
+                 <?=$unaeroport['Places_disponibles'] ?> <p>
+                 <a href="#" class="btn btn-primary">RESERVER</a>
+                 <p>  NUMERO DE VOL : <?=$unaeroport['Numero_vol'] ?> 
+                par <?=$unaeroport['Nom_compagnie'] ?><p>
 
         </div>
         </div>

@@ -27,7 +27,7 @@ $dbh = new PDO($dsn, $user, $password);
    }
    $resultat = $dbh->query("select * from compagnies_aeriennes $filtre")->fetchAll();
 // 3. AFFICHAGE DES DONNES
-// var_dump($resultat);
+ var_dump($resultat);
 
 ?>
 <div class="row row-cols-1 row-cols-md-3 g-4">
