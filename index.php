@@ -53,9 +53,22 @@ $dsn = 'mysql:dbname=reservation;host=127.0.0.1';
 $user = 'root';
 $password = '';
 $dbh = new PDO($dsn, $user, $password);
+var_dump($_POST);
+$filtre="";
+if (isset($_POST['depart'])) {
+  $depart=$_POST['depart'];
+  $filtre=" and  a.ville='$depart' ";
+}
 
    //2. RECUPERER LES DONNEES 
-   $resultat = $dbh->query("select * from vols")->fetchAll();
+   $resultat = $dbh->query("
+   SELECT 
+v.Numero_vol, v.Date_depart, v.Date_arrivee, v.Heure_depart,v.Heure_arrivee,
+v.Prix, v.Places_disponibles,
+a.ville as ville_depart, a2.Ville as ville_arrivee from vols v LEFT join aeroports a  on a.ID_aeroport = v.Ville_depart
+                      LEFT join aeroports a2  on a2.ID_aeroport = v.Ville_arrivee
+where 1=1 $filtre
+   ")->fetchAll();
 // 3. AFFICHAGE DES DONNES
 // var_dump($resultat);
 
@@ -68,11 +81,16 @@ $dbh = new PDO($dsn, $user, $password);
     <div class="col">
         <div class="card h-100">
         <div class="card-body">
-            <h5 class="card-title"><?=$unaeroport['Numero_vol'] ?></h5>
-            <p class="card-text">
-                <?=$unaeroport['Ville_depart'] ?>  - 
-                <?=$unaeroport['Ville_arrivee'] ?> - 
-                <?=$unaeroport['Date_depart'] ?>
+            <h5 class="card-title">NUMERO DE VOL : <?=$unaeroport['Numero_vol'] ?> </h5>
+            <p> Date de départ <?=$unaeroport['Date_depart'] ?> - <?=$unaeroport['Heure_depart'] ?> 
+            <p> Date d'arrivée <?=$unaeroport['Date_arrivee'] ?> - <?=$unaeroport['Heure_arrivee'] ?>
+            <p class="card-text">  
+                Départ : <?=$unaeroport['ville_depart'] ?>  <p> 
+                Arrivé : <?=$unaeroport['ville_arrivee'] ?> <p>  
+                Prix : <?=$unaeroport['Prix'] ?> € <p>
+                Nombre places restantes :    
+                 <?=$unaeroport['Places_disponibles'] ?> 
+
         </div>
         </div>
     </div> 
