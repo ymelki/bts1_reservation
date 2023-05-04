@@ -1,8 +1,13 @@
-
 <?php include "header.php" ?>
-
+<?php 
+$value="";
+if ( isset($_POST['ville'])  ){
+    $ville=$_POST['ville'];
+    $value=" value='$ville'";
+}
+?>
  <FORM method="POST" action="compagnie.php">
-    <input type="text" name="ville"  placeholder="VILLE">
+    <input type="text"   name="ville" <?=$value ?> placeholder="VILLE">
     <input type="submit" class="text-primary" value="RECHERCHEZ">
  </FORM>
 
@@ -27,7 +32,7 @@ $dbh = new PDO($dsn, $user, $password);
    }
    $resultat = $dbh->query("select * from compagnies_aeriennes $filtre")->fetchAll();
 // 3. AFFICHAGE DES DONNES
- var_dump($resultat);
+// var_dump($resultat);
 
 ?>
 <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -39,7 +44,8 @@ $dbh = new PDO($dsn, $user, $password);
             <h5 class="card-title"><?=$unecompagnie['Nom_compagnie'] ?></h5>
             <p class="card-text">
                 <?=$unecompagnie['Code_compagnie'] ?>  - 
-                <?=$unecompagnie['Pays_origine'] ?> 
+                <?=$unecompagnie['Pays_origine'] ?> <p>
+                <a href="detail_compagnie.php?id=<?=$unecompagnie['ID_compagnie']?>" class="btn btn-primary">DETAIL</a>
         </div>
         </div>
     </div> 

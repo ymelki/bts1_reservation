@@ -1,13 +1,18 @@
-
 <?php include "header.php" ?>
-
+<?php 
+$value="";
+if ( isset($_POST['aeroport'])  ){
+    $ville=$_POST['aeroport'];
+    $value=" value='$ville'";
+ }
+?>
 <form method="POST" action="aeroport.php">
-<div class="col-md-4">
-  <input type="text" class="form-control" name="aeroport" placeholder="ENTREZ UN NOM DE VILLE">
-</div>
-<div class="col-md-4">
-  <input type="submit"  class="form-control">
-</div>
+  <div class="col-md-4">
+    <input type="text" <?=$value?> class="form-control" name="aeroport" placeholder="ENTREZ UN NOM DE VILLE">
+  </div>
+  <div class="col-md-4">
+    <input type="submit"  class="form-control">
+  </div>
 </form>
 
 <br />
@@ -39,10 +44,10 @@ if (isset($_POST['aeroport'])) {
     <div class="col">
         <div class="card h-100">
         <div class="card-body">
-            <h5 class="card-title"><?=$unaeroport['Nom_aeroport'] ?></h5>
+            <h5 class="card-title"><?=$unaeroport['Name'] ?></h5>
             <p class="card-text">
-                <?=$unaeroport['Code_aeroport'] ?>  - 
-                <?=$unaeroport['Pays'] ?> - 
+                <?=$unaeroport['ICAO'] ?>  - 
+                <?=$unaeroport['Country'] ?> - 
                 <?=$unaeroport['Ville'] ?>
         </div>
         </div>

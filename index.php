@@ -79,6 +79,7 @@ if (isset($_POST['depart'])) {
             LEFT join aeroports as a2 on a2.ID = v.Ville_arrivee
             left join compagnies_aeriennes as c on v.Compagnie_aerienne=c.ID_compagnie
     where 1=1 $filtre
+    order by v.Date_depart asc
    ")->fetchAll();
 // 3. AFFICHAGE DES DONNES
 // var_dump($resultat);
@@ -88,14 +89,13 @@ if (isset($_POST['depart'])) {
 
 <div >
 <?php foreach ($resultat as $unaeroport) {  ?>
-<hr>
+<hr>  <b>           <p> Date de départ <?=$unaeroport['Date_depart'] ?> - <?=$unaeroport['Heure_depart'] ?> 
+            =>  Date d'arrivée <?=$unaeroport['Date_arrivee'] ?> - <?=$unaeroport['Heure_arrivee'] ?>
+</b>
     <div class="col">
         <div class="card w-100 h-100">
         <div class="card-body">
             <h5 class="card-title"></h5> 
-             <p> Date de départ <?=$unaeroport['Date_depart'] ?> - <?=$unaeroport['Heure_depart'] ?> 
-            =>  Date d'arrivée <?=$unaeroport['Date_arrivee'] ?> - <?=$unaeroport['Heure_arrivee'] ?>
-
             <p class="card-text">  
                 <?=$unaeroport['ville_depart'] ?>  => 
                 <?=$unaeroport['ville_arrivee'] ?> <p>  
