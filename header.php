@@ -1,3 +1,9 @@
+<?php
+session_start();
+// $_SESSION['test']="ce que je veux";
+var_dump($_SESSION);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,6 +78,13 @@
             <li class="nav-item">
             <a class="nav-link" href="connexion.php"><i class="fa-solid fa-user-tie"></i> Connexion</a>
             </li>
+
+            <?php if (isset($_SESSION['user'])){ ?>
+              <li class="nav-item">
+              <a class="nav-link" href="deconnexion.php"><i class="fa-solid fa-user-tie"></i> Deconnexion</a>
+              </li>
+                Vous etes connecté en tant que <?=$_SESSION['user'] ?>
+            <?php } ?>
 
         </ul>
        

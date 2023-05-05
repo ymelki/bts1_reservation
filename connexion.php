@@ -39,6 +39,7 @@ if ($erreur==""){
          // on verifie le mot de passe si c'est ok 
          if ($resultat['Mot_de_passe']==$mdp){
             echo "Vous êtes bien connecté";
+            $_SESSION['user']=$resultat['Adresse_email'];
         }
         else {
             $erreur="Le mot de passe est faux ! ";
