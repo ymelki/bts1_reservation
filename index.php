@@ -1,5 +1,14 @@
 <?php include "header.php";
-
+$info_dep="";
+if (isset($_POST['depart'])) {
+  $depart=$_POST['depart'];
+  $info_dep=" value='$depart' ";
+}
+$info_arr="";
+if (isset($_POST['arrive'])) {
+    $arrivee=$_POST['arrive'];
+    $info_arr=" value='$arrivee' ";
+}
 ?>
 
     <form class="row g-3 needs-validation" novalidate method="POST" action="index.php">
@@ -14,13 +23,13 @@
         
         
             <div class="col-md-4">
-            <input type="text" name="depart" class="form-control" id="validationCustom01" placeholder="Départ de " value="" required>
+            <input type="text" name="depart" <?=$info_dep?> class="form-control" id="validationCustom01" placeholder="Départ de " value="" required>
             <div class="valid-feedback">
             Looks good!
             </div>
         </div>
         <div class="col-md-4">
-            <input type="text" name="arrive" class="form-control" id="validationCustom02" placeholder="Arrivée à" value="" required>
+            <input type="text" name="arrive" <?=$info_arr?> class="form-control" id="validationCustom02" placeholder="Arrivée à" value="" required>
             <div class="valid-feedback">
             Looks good!
             </div>

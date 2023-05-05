@@ -1,6 +1,9 @@
-<?php include "header.php" ?>
+<?php include "header.php"; 
+$erreur="";
 
+?>
 <?php if (isset($_POST['prenom'])) {
+
  echo "vous avez cliqué sur inscription";  
 
 // 0 recuperation des données du form
@@ -10,6 +13,17 @@ $email=$_POST['email'];
 $mdp=$_POST['mdp'];
 $tel=$_POST['tel'];
 
+if (($prenom=="") ||($nom=="") ||($email=="") ||($mdp=="") || ($tel=="")  ) {
+  echo "test";
+  $erreur="Un des champs n'a pas été remplie : ";
+}
+if (($prenom=="")){ $erreur=$erreur." Le champs prénom est vide ";  }
+if ((strlen($prenom)<4)){ $erreur=$erreur." Le prénom doit faire plus que 3 caracteres ";  }
+if (($nom=="")){ $erreur=$erreur." Le champs nom est vide ";  }
+if (($email=="")){ $erreur=$erreur." Le champs email est vide ";  }
+if (($mdp=="")){ $erreur=$erreur." Le champs mdp est vide ";  }
+if (($tel=="")){ $erreur=$erreur." Le champs tel est vide ";  }
+else {
  // 1 connexion à la B.D
  $dsn = 'mysql:dbname=reservation;host=127.0.0.1';
  $user = 'root';
@@ -37,11 +51,17 @@ $tel=$_POST['tel'];
         '$tel'
      )"
 );
+}
+
 }?>
 <h1>INSCRIPTION</h1>
+
+
+
+<?=$erreur?>
 <form method="POST" action="inscription.php">
 <div class="col-md-4">
-  <input type="text" class="form-control" name="prenom" placeholder="ENTREZ UN PRENOM">
+  <input type="text" class="form-control" name="prenom" placeholder="ENTREZ UN PRENOM" >
 </div>
 <div class="col-md-4">
   <input type="text" class="form-control" name="nom" placeholder="ENTREZ UN NOM">
